@@ -1,0 +1,26 @@
+{
+  "name": "nodejs-sample",
+  "version": "1.0.0",
+  "description": "nodejs sample with express framework",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VikashChauhan51/nodejs_express_sample.git"
+  },
+  "author": "vikash chauhan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/VikashChauhan51/nodejs_express_sample/issues"
+  },
+  "homepage": "https://github.com/VikashChauhan51/nodejs_express_sample#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.3"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
