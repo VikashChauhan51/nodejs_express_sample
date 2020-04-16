@@ -1,16 +1,38 @@
 const express = require('express');
 const exphbs  = require('express-handlebars');
 const path = require('path');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
 //App port
 const PORT=8585;
 //instance of express
 const app = express();
+
+//view engine
 app.engine('.hbs', exphbs({extname: '.hbs'}));
 app.set('view engine', '.hbs');
+
+//static resource
 app.use(express.static(path.join(__dirname, '/public/')));
 app.use('/css',express.static(path.join(__dirname, '/node_modules/bootstrap/dist/css')));
 app.use('/js',express.static(path.join(__dirname, '/node_modules/bootstrap/dist/js')));
 app.use('/js',express.static(path.join(__dirname, '/node_modules/jquery/dist/js')));
+
+//app set
+app.set('trust proxy', 1); // trust first proxy
+
+//middlewares
+app.use(cookieParser());
+app.use(session({
+   genid: function(req) {
+      return genuuid() // use UUIDs for session IDs
+    },
+   secret: 'keyboard cat',
+   resave: false,
+   saveUninitialized: true,
+   cookie: { secure: true }
+ }));
+
 
 // Create `ExpressHandlebars` instance with a default layout.
 // const hbs = exphbs.create({
