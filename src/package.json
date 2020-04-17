@@ -4,7 +4,7 @@
   "description": "nodejs sample with express framework",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "node cluster.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

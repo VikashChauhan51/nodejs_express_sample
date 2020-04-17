@@ -3,6 +3,7 @@ const exphbs  = require('express-handlebars');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const process = require('process'); 
 //App port
 const PORT=8585;
 //instance of express
@@ -25,7 +26,7 @@ app.set('trust proxy', 1); // trust first proxy
 app.use(cookieParser());
 app.use(session({
    genid: function(req) {
-      return genuuid() // use UUIDs for session IDs
+      return "121"
     },
    secret: 'keyboard cat',
    resave: false,
@@ -58,3 +59,12 @@ const server = app.listen(PORT, ()=> {
     
     console.log("Example app listening at http://%s:%s", host, port)
  });
+
+ process.on('message',msg=>{
+   console.log(`Message from master :${msg}`);
+ });
+ if (require.main === module) {
+   // this module was run directly from the command line as in node xxx.js
+} else {
+   // this module was not run directly from the command line and probably loaded by something else
+}
