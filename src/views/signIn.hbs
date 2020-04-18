@@ -23,15 +23,23 @@
         <div class="card card-signin my-5">
           <div class="card-body">
             <h5 class="card-title text-center">Sign In</h5>
+            {{#if errors}}
+            <section class="errors">
+              {{#each errors as |item| }}
+              <span class="error">{{item.msg}}</span>
+              <br/>
+              {{/each}}
+            </section>
+            {{/if}}
             <form class="form-signin" method="post" action="/signIn">
               <div class="form-label-group">
-                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-                <label for="inputEmail">Email address</label>
+                <input type="email" id="email" name="email" class="form-control" placeholder="Email address"  autofocus>
+                <label for="email">Email address</label>
               </div>
 
               <div class="form-label-group">
-                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-                <label for="inputPassword">Password</label>
+                <input type="password" id="password" name="password" class="form-control" placeholder="Password" >
+                <label for="password">Password</label>
               </div>
               <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign In</button>
             </form>

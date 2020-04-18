@@ -2,6 +2,7 @@ const express = require('express');
 const exphbs  = require('express-handlebars');
 const path = require('path');
 const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 const session = require('express-session');
 const process = require('process'); 
 const redis = require('./redis');
@@ -23,7 +24,9 @@ app.use('/css',express.static(path.join(__dirname, '/node_modules/bootstrap/dist
 app.use('/js',express.static(path.join(__dirname, '/node_modules/bootstrap/dist/js')));
 app.use('/js',express.static(path.join(__dirname, '/node_modules/jquery/dist')));
 
-//middlewares
+//middlewares (sequence matter)
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:false}));
 app.use(cookieParser());
 app.use(session({
    secret: 'somesecret',
@@ -32,19 +35,6 @@ app.use(session({
    resave: false
  }));
 
-
-// Create `ExpressHandlebars` instance with a default layout.
-// const hbs = exphbs.create({
-// 	helpers: helpers,
-
-// 	// Uses multiple partials dirs, templates in "shared/templates/" are shared
-// 	// with the client-side of the app (see below).
-// 	partialsDir: [
-// 		"shared/templates/",
-// 		"views/partials/",
-//    ],
-   
-// });
  //  Connect all our routes to our application
 app.use('/', routes);
 // Start server
