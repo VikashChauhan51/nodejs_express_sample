@@ -4,6 +4,8 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const process = require('process'); 
+const redis = require('./redis');
+
 //App port
 const PORT=8585;
 //instance of express
@@ -12,26 +14,21 @@ const app = express();
 //view engine
 app.engine('.hbs', exphbs({extname: '.hbs'}));
 app.set('view engine', '.hbs');
-
+//app set
+app.set('trust proxy', 1); // trust first proxy
 //static resource
 app.use(express.static(path.join(__dirname, '/public/')));
 app.use('/css',express.static(path.join(__dirname, '/node_modules/bootstrap/dist/css')));
 app.use('/js',express.static(path.join(__dirname, '/node_modules/bootstrap/dist/js')));
 app.use('/js',express.static(path.join(__dirname, '/node_modules/jquery/dist/js')));
 
-//app set
-app.set('trust proxy', 1); // trust first proxy
-
 //middlewares
 app.use(cookieParser());
 app.use(session({
-   genid: function(req) {
-      return "121"
-    },
-   secret: 'keyboard cat',
-   resave: false,
-   saveUninitialized: true,
-   cookie: { secure: true }
+   secret: 'somesecret',
+   store: redis.redisStore,
+   saveUninitialized: false,
+   resave: false
  }));
 
 
@@ -49,7 +46,7 @@ app.use(session({
 // });
 // This responds with "Hello World" on the homepage
 app.get('/',  (req, res)=> {
-   res.render('home', {layout: false});
+   res.render('home', {layout: true});
 });
  
 // Start server
