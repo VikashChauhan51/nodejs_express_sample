@@ -1,0 +1,31 @@
+<h1>{{ title }}</h1>
+
+<div class="toolbar">
+    <label>
+      From:
+      <input type="date" [(ngModel)]="filterStart" (change)="applyFilters()" />
+    </label>
+    <label>
+      To:
+      <input type="date" [(ngModel)]="filterEnd" (change)="applyFilters()" />
+    </label>
+    <label>
+      Search:
+      <input type="text" [(ngModel)]="searchTerm" (input)="applyFilters()" placeholder="Search events..." />
+    </label>
+  </div>
+<div class="app-container">
+    <div id="external-events" class="external-events">
+      <p><strong>Draggable Events</strong></p>
+      <div class="fc-event">Meeting</div>
+      <div class="fc-event">Call</div>
+      <div class="fc-event">Workout</div>
+      <div class="fc-event">Lunch</div>
+    </div>
+  
+    <div class="calendar-wrapper">
+      <full-calendar [options]="calendarOptions"></full-calendar>
+    </div>
+  </div>
+  
+  
