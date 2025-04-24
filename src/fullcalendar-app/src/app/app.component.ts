@@ -68,6 +68,8 @@ export class AppComponent implements AfterViewInit {
     selectable: true,
     droppable: true,
     eventOverlap: true,
+    eventMouseEnter: this.handleEventMouseEnter.bind(this),
+    eventMouseLeave: this.handleEventMouseLeave.bind(this),
     events: this.allEvents,
     drop: (info) => {
       // Remove the element from list if needed
@@ -110,7 +112,31 @@ export class AppComponent implements AfterViewInit {
 
     this.calendarOptions.events = filtered;
   }
-
+  handleEventMouseEnter(arg: any): void {
+    const tooltip = document.createElement('div');
+    tooltip.setAttribute('id', 'event-tooltip');
+    tooltip.innerHTML = `
+      <strong>${arg.event.title}</strong><br/>
+      ${arg.event.extendedProps.description || ''}
+    `;
+    tooltip.style.position = 'absolute';
+    tooltip.style.top = `${arg.jsEvent.pageY + 10}px`;
+    tooltip.style.left = `${arg.jsEvent.pageX + 10}px`;
+    tooltip.style.background = 'rgba(0, 0, 0, 0.75)';
+    tooltip.style.color = 'white';
+    tooltip.style.padding = '5px 10px';
+    tooltip.style.borderRadius = '4px';
+    tooltip.style.zIndex = '1000';
+    document.body.appendChild(tooltip);
+  }
+  
+  handleEventMouseLeave(): void {
+    const tooltip = document.getElementById('event-tooltip');
+    if (tooltip) {
+      tooltip.remove();
+    }
+  }
+  
   handleCustomButtonClick() {
     alert('Add Event button clicked!');
     // Optional: logic to open a modal or programmatically add an event

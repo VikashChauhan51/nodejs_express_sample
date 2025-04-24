@@ -23,3 +23,9 @@
 .calendar-wrapper {
   flex-grow: 1;
 }
+/* styles.css */
+#event-tooltip {
+  transition: opacity 0.2s ease;
+  font-size: 13px;
+  max-width: 200px;
+}
