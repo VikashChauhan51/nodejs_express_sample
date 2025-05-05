@@ -47,6 +47,20 @@ export class AppComponent implements AfterViewInit {
 
   calendarOptions: CalendarOptions = {
     plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin,listPlugin,multiMonthPlugin],
+    hiddenDays: [0], 
+    weekends: true,
+    allDaySlot: true,
+    dayHeaderContent: (args) => {
+      const defaultFormatter = new Intl.DateTimeFormat(navigator.language, { weekday: 'short' });
+      const dayIndex = args.date.getDay();
+      
+      if (dayIndex === 6) { // Saturday
+        return 'Waitlist';
+      }
+  
+      // Fallback to browser's short weekday name
+      return defaultFormatter.format(args.date);
+    },
     initialView: 'multiMonthYear',
     multiMonthMaxColumns: 1,
     headerToolbar: {
